@@ -3,12 +3,11 @@ import requests
 import os
 import time
 
-API_KEY_FIX = ""
-API_SECRET_FIX = ""
-
+API_KEY_FIX = "Bxi_kIv7gV01o567kkDhS3Cy7mLYaqbk"
+API_SECRET_FIX = "Ak2VeBdlqDy4Q8QK0z07d_jZbSXvV8CE"
 FACESET_NAME = "absensi_kantor"
 
-st.set_page_config(page_title="Speed Face Recognition", page_icon="⚡")
+st.set_page_config(page_title="Face Recognition", page_icon="⚡")
 st.title("Sistem Pengenalan Wajah ")
 def create_faceset_if_not_exists():
     url = "https://api-us.faceplusplus.com/facepp/v3/faceset/create"
@@ -22,7 +21,6 @@ def add_face_to_cloud(image_bytes, user_name):
     url_detect = "https://api-us.faceplusplus.com/facepp/v3/detect"
     files = {'image_file': image_bytes}
     data_detect = {'api_key': API_KEY_FIX, 'api_secret': API_SECRET_FIX}
-    
     res_detect = requests.post(url_detect, data=data_detect, files=files).json()
     if "faces" in res_detect and len(res_detect["faces"]) > 0:
         face_token = res_detect["faces"][0]["face_token"]
@@ -71,7 +69,6 @@ if 'setup_done' not in st.session_state:
     st.session_state['setup_done'] = True
 
 tab1, tab2, tab3 = st.tabs(["Registrasi", " Absensi ", "Compare"])
-
 with tab1:
     st.header("Registrasi")
     reg_name = st.text_input("Nama User:")
@@ -90,7 +87,6 @@ with tab1:
 with tab2:
     st.header("Absensi ")
     mode_src = st.radio("Input:", ["Kamera", "Upload"], horizontal=True, key="src")
-    
     q_img = st.camera_input("Scan", key="c2") if mode_src == "Kamera" else st.file_uploader("Upload", key="u2")
     
     if st.button("SCAN SEKARANG", type="primary"):
