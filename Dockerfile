@@ -3,9 +3,6 @@ FROM python:3.9-slim
 
 # Set folder kerja di dalam container
 WORKDIR /app
-
-# Install dependency sistem dasar
-# SAYA MENGHAPUS 'software-properties-common' YANG MENYEBABKAN ERROR
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
