@@ -3,8 +3,8 @@ import requests
 import os
 import time
 
-API_KEY_FIX = "Bxi_kIv7gV01o567kkDhS3Cy7mLYaqbk"
-API_SECRET_FIX = "Ak2VeBdlqDy4Q8QK0z07d_jZbSXvV8CE"
+API_KEY_FIX = ""
+API_SECRET_FIX = ""
 
 FACESET_NAME = "absensi_kantor"
 
