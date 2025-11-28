@@ -3,8 +3,8 @@ import requests
 import os
 import time
 
-API_KEY_FIX = "Bxi_kIv7gV01o567kkDhS3Cy7mLYaqbk"
-API_SECRET_FIX = "Ak2VeBdlqDy4Q8QK0z07d_jZbSXvV8CE"
+API_KEY_FIX = ""
+API_SECRET_FIX = ""
 FACESET_NAME = "absensi_kantor"
 
 st.set_page_config(page_title="Face Recognition", page_icon="⚡")
@@ -27,7 +27,7 @@ def add_face_to_cloud(image_bytes, user_name):
         clean_name = user_name.replace(" ", "_")
         url_add = "https://api-us.faceplusplus.com/facepp/v3/faceset/addface"
         data_add = {
-            'api_key': API_KEY_FIX, 
+            'api_key': API_KEY_FIX,
             'api_secret': API_SECRET_FIX,
             'outer_id': FACESET_NAME,
             'face_tokens': face_token
@@ -58,7 +58,6 @@ def search_face_in_cloud(image_bytes):
         return response.json()
     except Exception as e:
         return {"error_message": str(e)}
-
 def _compare(img1, img2):
     url = "https://api-us.faceplusplus.com/facepp/v3/compare"
     files = {'image_file1': img1, 'image_file2': img2}
@@ -67,15 +66,12 @@ def _compare(img1, img2):
 if 'setup_done' not in st.session_state:
     create_faceset_if_not_exists()
     st.session_state['setup_done'] = True
-
 tab1, tab2, tab3 = st.tabs(["Registrasi", " Absensi ", "Compare"])
 with tab1:
     st.header("Registrasi")
     reg_name = st.text_input("Nama User:")
     mode = st.radio("Input:", ["Kamera", "Upload"], horizontal=True, key="reg")
-    
     img = st.camera_input("Foto", key="c1") if mode == "Kamera" else st.file_uploader("Upload", key="u1")
-    
     if st.button("Simpan Wajah"):
         if reg_name and img:
             with st.spinner("Mendaftarkan ke"):
@@ -93,7 +89,6 @@ with tab2:
         if q_img:
             with st.spinner("Mencari..."):
                 res = search_face_in_cloud(q_img.getvalue())
-
                 if "results" in res:
                     if not res["results"]:
                         st.error("Wajah tidak ditemukan di database.")
@@ -124,7 +119,6 @@ with tab3:
     c1, c2 = st.columns(2)
     f1 = c1.file_uploader("Foto A", key="m1")
     f2 = c2.file_uploader("Foto B", key="m2")
-    
     if st.button("Bandingkan"):
         if f1 and f2:
             res = _compare(f1.getvalue(), f2.getvalue())
